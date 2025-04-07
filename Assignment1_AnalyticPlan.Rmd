@@ -1,0 +1,263 @@
+---
+title: "Assignment1_AnalyticPlan"
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r}
+customers <- read.csv("customer_data.csv")
+head(customers)
+
+unique(customers$Attrition_Flag)
+
+unique(customers$Customer_Age)
+range(customers$Customer_Age)
+
+unique(customers$Gender)
+
+unique(customers$Dependent_count)
+
+unique(customers$Education_Level)
+
+unique(customers$Marital_Status)
+
+unique(customers$Income_Category)
+
+unique(customers$Card_Category)
+
+unique(customers$Months_on_book)
+range(customers$Months_on_book)
+
+unique(customers$Total_Relationship_Count)
+
+unique(customers$Contacts_Count_12_mon)
+
+unique(customers$Months_Inactive_12_mon)
+
+range(customers$Credit_Limit)
+
+range(customers$Total_Revolving_Bal)
+
+range(customers$Avg_Open_To_Buy)
+
+range(customers$Total_Amt_Chng_Q4_Q1)
+
+range(customers$Total_Trans_Amt)
+
+range(customers$Total_Trans_Ct)
+
+range(customers$Total_Ct_Chng_Q4_Q1)
+
+range(customers$Avg_Utilization_Ratio)
+```
+
+```{r}
+pairs(customers[ ,10:21])
+cor(customers[, c(14:16, 18:21)])
+```
+```{r}
+library(ggplot2)
+
+ggplot(customers) +
+  geom_point(aes(x=Credit_Limit,y=Avg_Open_To_Buy)) +
+  geom_smooth(method='lm',aes(y=Avg_Open_To_Buy,x=Credit_Limit)) +
+  facet_grid(.~Attrition_Flag)
+
+```
+```{r}
+ggplot(customers) +
+  geom_point(aes(x=Credit_Limit,y=Avg_Utilization_Ratio)) +
+  geom_smooth(method='gam',aes(y=Avg_Utilization_Ratio, x=Credit_Limit)) +
+  facet_grid(.~Attrition_Flag)
+```
+```{r}
+ggplot(customers) +
+  geom_point(aes(x=Total_Revolving_Bal,y=Avg_Utilization_Ratio)) +
+  geom_smooth(method='lm',aes(y=Avg_Utilization_Ratio,x=Total_Revolving_Bal)) +
+  facet_grid(.~Attrition_Flag)
+```
+
+```{r}
+ggplot(customers) +
+  geom_point(aes(x=Avg_Open_To_Buy,y=Avg_Utilization_Ratio)) +
+  geom_smooth(method='gam',aes(y=Avg_Utilization_Ratio, x=Avg_Open_To_Buy)) +
+  facet_grid(.~Attrition_Flag)
+```
+```{r}
+?geom_smooth
+```
+
+```{r}
+ggplot(customers) +
+  geom_point(aes(x=Total_Trans_Amt,y=Total_Trans_Ct)) +
+  geom_smooth(method='lm',aes(y=Total_Trans_Ct,x=Total_Trans_Amt)) +
+  facet_grid(.~Attrition_Flag)
+```
+
+```{r}
+ggplot(customers, aes(x=Attrition_Flag, y=Customer_Age)) +
+  geom_boxplot()
+```
+```{r}
+ggplot(customers, aes(x=Card_Category, y=Customer_Age)) +
+  geom_boxplot()+
+  facet_grid(.~Attrition_Flag)
+```
+
+```{r}
+ggplot(customers, aes(x=Attrition_Flag, y=Months_on_book)) +
+  geom_boxplot()
+```
+
+```{r}
+ggplot(customers, aes(x = Gender)) +
+  geom_bar(stat="count")+
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.5)+
+  facet_grid(.~Attrition_Flag)
+```
+```{r}
+ggplot(customers, aes(x = Dependent_count)) +
+  geom_bar(stat="count")+
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.5)+
+  facet_grid(.~Attrition_Flag)
+```
+
+
+```{r}
+ggplot(customers, aes(x = Education_Level)) +
+  geom_bar(stat="count")+
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.5)+
+  facet_grid(.~Attrition_Flag)+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+
+```{r}
+ggplot(customers, aes(x = Marital_Status)) +
+  geom_bar(stat="count")+
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.5)+
+  facet_grid(.~Attrition_Flag)+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+ggplot(customers, aes(x = Income_Category)) +
+  geom_bar(stat="count")+
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.5)+
+  facet_grid(.~Attrition_Flag)+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+ggplot(customers, aes(x = Card_Category)) +
+  geom_bar(stat="count")+
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.5)+
+  facet_grid(.~Attrition_Flag)+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+ggplot(customers, aes(x = Total_Relationship_Count)) +
+  geom_bar(stat="count")+
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.5)+
+  facet_grid(.~Attrition_Flag)+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+ggplot(customers, aes(x = Months_Inactive_12_mon)) +
+  geom_bar(stat="count")+
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.5)+
+  facet_grid(.~Attrition_Flag)+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+ggplot(customers, aes(x = Contacts_Count_12_mon)) +
+  geom_bar(stat="count")+
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.5)+
+  facet_grid(.~Attrition_Flag)+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+ggplot(customers, aes(x=Attrition_Flag, y=Total_Amt_Chng_Q4_Q1)) +
+  geom_boxplot()
+```
+```{r}
+ggplot(customers, aes(x=Attrition_Flag, y=Total_Ct_Chng_Q4_Q1)) +
+  geom_boxplot()
+```
+
+```{r}
+ggplot(data=customers, aes(x = Credit_Limit)) + 
+  geom_histogram(bins=20)+
+  facet_grid(.~Attrition_Flag)
+```
+```{r}
+ggplot(data=customers, aes(x = Total_Revolving_Bal)) + 
+  geom_histogram(bins=20)+
+  facet_grid(.~Attrition_Flag)
+```
+```{r}
+ggplot(data=customers, aes(x = Avg_Open_To_Buy)) + 
+  geom_histogram(bins=20)+
+  facet_grid(.~Attrition_Flag)
+```
+
+```{r}
+ggplot(data=customers, aes(x = Total_Trans_Amt)) + 
+  geom_histogram(bins=20)+
+  facet_grid(.~Attrition_Flag)
+```
+```{r}
+ggplot(data=customers, aes(x = Total_Trans_Ct)) + 
+  geom_histogram(bins=20)+
+  facet_grid(.~Attrition_Flag)
+```
+```{r}
+ggplot(data=customers, aes(x = Avg_Utilization_Ratio)) + 
+  geom_histogram(bins=20)+
+  facet_grid(.~Attrition_Flag)
+```
+
+```{r}
+summary(customers[customers$Attrition_Flag == "Attrited Customer", "Total_Trans_Amt"])
+
+summary(customers[customers$Attrition_Flag == "Existing Customer", "Total_Trans_Amt"])
+```
+
+```{r}
+summary(customers[customers$Attrition_Flag == "Attrited Customer", "Total_Trans_Ct"])
+
+summary(customers[customers$Attrition_Flag == "Existing Customer", "Total_Trans_Ct"])
+```
+
+```{r}
+summary(customers[customers$Attrition_Flag == "Attrited Customer", "Total_Revolving_Bal"])
+
+summary(customers[customers$Attrition_Flag == "Existing Customer", "Total_Revolving_Bal"])
+
+```
+
+```{r}
+summary(customers[customers$Attrition_Flag == "Attrited Customer", "Total_Amt_Chng_Q4_Q1"])
+
+summary(customers[customers$Attrition_Flag == "Existing Customer", "Total_Amt_Chng_Q4_Q1"])
+```
+
+```{r}
+summary(customers[customers$Attrition_Flag == "Attrited Customer", "Total_Ct_Chng_Q4_Q1"])
+
+summary(customers[customers$Attrition_Flag == "Existing Customer", "Total_Ct_Chng_Q4_Q1"])
+```
+```{r}
+summary(customers[customers$Attrition_Flag == "Attrited Customer", "Avg_Utilization_Ratio"])
+
+summary(customers[customers$Attrition_Flag == "Existing Customer", "Avg_Utilization_Ratio"])
+```
+```{r}
+variance <- sapply(customers, var)
+print(variance)
+```
+
+
